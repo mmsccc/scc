@@ -1,0 +1,1003 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+    
+    <!-- Styles (single <style> block follows) -->
+    <style>
+        /* Reset and Base Typography */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        :root {
+            --primary-dark: #1a1f2e;
+            --primary-accent: #c9a961;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --background-light: #fafafa;
+            --background-white: #ffffff;
+            --border-light: #e9ecef;
+            --shadow-subtle: 0 2px 8px rgba(0,0,0,0.08);
+            --shadow-hover: 0 8px 24px rgba(0,0,0,0.12);
+            --max-width: 1200px;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+
+        body {
+            font-family: var(--font-sans);
+            color: var(--text-primary);
+            line-height: 1.6;
+            background: var(--background-white);
+        }
+
+        h1, h2, h3, h4, h5, h6 {
+            font-family: var(--font-serif);
+            line-height: 1.2;
+            color: var(--primary-dark);
+        }
+
+        h1 { font-size: 3rem; font-weight: 300; letter-spacing: -0.02em; }
+        h2 { font-size: 2.25rem; font-weight: 300; margin-bottom: 1.5rem; }
+        h3 { font-size: 1.75rem; font-weight: 400; margin-bottom: 1rem; }
+        h4 { font-size: 1.375rem; font-weight: 400; }
+
+        p {
+            margin-bottom: 1.25rem;
+            color: var(--text-secondary);
+            font-size: 1.0625rem;
+            line-height: 1.8;
+        }
+
+        .container {
+            max-width: var(--max-width);
+            margin: 0 auto;
+            padding: 0 2rem;
+        }
+
+        /* Header Navigation */
+        .header {
+            background: var(--background-white);
+            border-bottom: 1px solid var(--border-light);
+            position: sticky;
+            top: 0;
+            z-index: 100;
+            backdrop-filter: blur(10px);
+            background: rgba(255,255,255,0.95);
+        }
+
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 1.5rem 0;
+        }
+
+        .logo {
+            font-family: var(--font-serif);
+            font-size: 1.5rem;
+            font-weight: 400;
+            color: var(--primary-dark);
+            text-decoration: none;
+            letter-spacing: -0.01em;
+        }
+
+        .nav-menu {
+            display: flex;
+            list-style: none;
+            gap: 2.5rem;
+        }
+
+        .nav-menu a {
+            color: var(--text-primary);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            transition: color 0.3s ease;
+            position: relative;
+        }
+
+        .nav-menu a::after {
+            content: '';
+            position: absolute;
+            bottom: -3px;
+            left: 0;
+            width: 0;
+            height: 1px;
+            background: var(--primary-accent);
+            transition: width 0.3s ease;
+        }
+
+        .nav-menu a:hover::after {
+            width: 100%;
+        }
+
+        /* Hero Section Component */
+        .hero {
+            padding: 6rem 0;
+            background: linear-gradient(135deg, var(--background-light) 0%, var(--background-white) 100%);
+            position: relative;
+            overflow: hidden;
+        }
+
+        .hero::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            right: -20%;
+            width: 60%;
+            height: 200%;
+            background: radial-gradient(circle, var(--primary-accent) 0%, transparent 70%);
+            opacity: 0.03;
+            pointer-events: none;
+        }
+
+        .hero-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .hero .subtitle {
+            color: var(--primary-accent);
+            font-size: 0.875rem;
+            font-weight: 600;
+            letter-spacing: 0.1em;
+            text-transform: uppercase;
+            margin-bottom: 1rem;
+        }
+
+        .hero h1 {
+            margin-bottom: 1.5rem;
+            max-width: 800px;
+        }
+
+        .hero .lead {
+            font-size: 1.25rem;
+            color: var(--text-secondary);
+            max-width: 600px;
+            margin-bottom: 2rem;
+            line-height: 1.6;
+        }
+
+        /* Button Styles */
+        .btn {
+            display: inline-block;
+            padding: 0.875rem 2rem;
+            font-size: 0.9375rem;
+            font-weight: 500;
+            text-decoration: none;
+            border-radius: 2px;
+            transition: all 0.3s ease;
+            cursor: pointer;
+            border: none;
+            letter-spacing: 0.02em;
+        }
+
+        .btn-primary {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .btn-primary:hover {
+            background: var(--primary-accent);
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .btn-outline {
+            border: 1px solid var(--primary-dark);
+            color: var(--primary-dark);
+            background: transparent;
+        }
+
+        .btn-outline:hover {
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        /* Services Grid Component */
+        .services {
+            padding: 5rem 0;
+            background: var(--background-white);
+        }
+
+        .services-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .service-card {
+            padding: 2rem;
+            background: var(--background-white);
+            border: 1px solid var(--border-light);
+            transition: all 0.3s ease;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .service-card::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 2px;
+            background: var(--primary-accent);
+            transform: scaleX(0);
+            transition: transform 0.3s ease;
+        }
+
+        .service-card:hover {
+            transform: translateY(-4px);
+            box-shadow: var(--shadow-hover);
+        }
+
+        .service-card:hover::before {
+            transform: scaleX(1);
+        }
+
+        .service-icon {
+            width: 48px;
+            height: 48px;
+            background: var(--primary-accent);
+            opacity: 0.1;
+            border-radius: 4px;
+            margin-bottom: 1.5rem;
+        }
+
+        .service-card h3 {
+            font-size: 1.25rem;
+            margin-bottom: 1rem;
+        }
+
+        .service-card p {
+            font-size: 0.9375rem;
+            line-height: 1.6;
+        }
+
+        /* Feature Component */
+        .feature {
+            padding: 5rem 0;
+            background: var(--background-light);
+        }
+
+        .feature-content {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 4rem;
+            align-items: center;
+        }
+
+        .feature-text h2 {
+            margin-bottom: 1.5rem;
+        }
+
+        .feature-list {
+            list-style: none;
+            margin: 2rem 0;
+        }
+
+        .feature-list li {
+            padding: 0.75rem 0;
+            padding-left: 2rem;
+            position: relative;
+            color: var(--text-secondary);
+        }
+
+        .feature-list li::before {
+            content: '→';
+            position: absolute;
+            left: 0;
+            color: var(--primary-accent);
+            font-weight: 600;
+        }
+
+        .feature-visual {
+            background: var(--background-white);
+            padding: 1.5rem;
+            box-shadow: var(--shadow-subtle);
+            border-radius: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            position: relative;
+            height: fit-content;
+        }
+
+        .feature-visual img {
+            max-width: 100%;
+            height: auto;
+            width: auto;
+            object-fit: contain;
+            max-height: none;
+        }
+
+        /* Process Component */
+        .process {
+            padding: 5rem 0;
+            background: var(--background-white);
+        }
+
+        .process-steps {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 2rem;
+            margin-top: 3rem;
+        }
+
+        .process-step {
+            background: var(--background-light);
+            padding: 2rem;
+            border-radius: 8px;
+            border-left: 4px solid var(--primary-accent);
+            position: relative;
+            transition: all 0.3s ease;
+        }
+
+        .process-step:hover {
+            transform: translateY(-2px);
+            box-shadow: var(--shadow-subtle);
+        }
+
+        .process-step-number {
+            position: absolute;
+            top: -10px;
+            left: -10px;
+            width: 32px;
+            height: 32px;
+            background: var(--primary-accent);
+            color: white;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            font-weight: 600;
+            font-size: 0.875rem;
+        }
+
+        .process-step p {
+            margin: 0;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        /* Stats Component */
+        .stats {
+            padding: 4rem 0;
+            background: var(--primary-dark);
+            color: white;
+        }
+
+        .stats-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 3rem;
+            text-align: center;
+        }
+
+        .stat-item .stat-number {
+            font-size: 2.5rem;
+            font-weight: 300;
+            font-family: var(--font-serif);
+            color: var(--primary-accent);
+            display: block;
+            margin-bottom: 0.5rem;
+        }
+
+        .stat-item .stat-label {
+            font-size: 0.875rem;
+            text-transform: uppercase;
+            letter-spacing: 0.1em;
+            opacity: 0.8;
+        }
+
+        /* CTA Component */
+        .cta {
+            padding: 5rem 0;
+            background: linear-gradient(135deg, var(--primary-dark) 0%, #2c3444 100%);
+            color: white;
+            text-align: center;
+        }
+
+        .cta h2 {
+            color: white;
+            margin-bottom: 1rem;
+        }
+
+        .cta p {
+            color: rgba(255,255,255,0.8);
+            max-width: 600px;
+            margin: 0 auto 2rem;
+        }
+
+        /* Team Component */
+        .team {
+            padding: 5rem 0;
+            background: var(--background-white);
+        }
+
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 3rem;
+            margin-top: 3rem;
+        }
+
+        .team-member {
+            text-align: center;
+        }
+
+        .team-photo {
+            width: 180px;
+            height: 180px;
+            border-radius: 50%;
+            background: var(--background-light);
+            margin: 0 auto 1.5rem;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .team-photo::after {
+            content: '';
+            position: absolute;
+            inset: 4px;
+            border-radius: 50%;
+            border: 1px solid var(--primary-accent);
+            opacity: 0.3;
+        }
+
+        .team-member h4 {
+            margin-bottom: 0.25rem;
+        }
+
+        .team-member .role {
+            color: var(--primary-accent);
+            font-size: 0.875rem;
+            font-weight: 500;
+            margin-bottom: 1rem;
+        }
+
+        .team-member p {
+            font-size: 0.9375rem;
+        }
+
+        /* About section team grid - enforce two columns, responsive */
+        .about .team-members {
+            display: grid;
+            grid-template-columns: repeat(2, minmax(0, 1fr));
+            gap: 2rem;
+            max-width: 1200px;
+            margin: 0 auto 2rem;
+            /* ensure grid items stretch to equal height */
+            align-items: stretch;
+        }
+
+        .about .team-members .team-member {
+            min-width: 0; /* avoid intrinsic min-width causing wrapping */
+            box-sizing: border-box;
+            text-align: left; /* override global centered team-member */
+        }
+
+        .member-image img {
+            display: block;
+            max-width: 100%;
+            height: auto;
+        }
+
+        @media (max-width: 768px) {
+            .about .team-members {
+                grid-template-columns: 1fr;
+            }
+        }
+
+        /* Elegant member layout: image left, content right on desktop; stacked on mobile */
+        .about .team-members .about-member {
+            display: flex;
+            gap: 1.5rem;
+            align-items: flex-start;
+            padding: 1.5rem;
+            background: var(--background-white);
+            border-radius: 8px;
+            box-shadow: var(--shadow-subtle);
+            border-left: 4px solid var(--primary-accent);
+            /* make the card fill the grid row height so all cards in a row are equal-height */
+            height: 100%;
+            align-self: stretch;
+            box-sizing: border-box;
+        }
+
+        .about .team-members .about-member .member-image {
+            flex: 0 0 120px;
+        }
+
+        .about .team-members .about-member .member-image img {
+            width: 120px;
+            height: 120px;
+            border-radius: 50%;
+            object-fit: cover;
+            border: 3px solid var(--primary-accent);
+            box-shadow: var(--shadow-subtle);
+            display: block;
+        }
+
+        .about .team-members .about-member .member-content {
+            flex: 1 1 auto;
+        }
+
+        /* ensure member-content text is left aligned */
+        .about .team-members .about-member .member-content {
+            text-align: left;
+        }
+
+        .about .team-members .about-member h3 {
+            margin: 0 0 0.25rem 0;
+            font-size: 1.25rem;
+            color: var(--primary-dark);
+        }
+
+        .about .team-members .about-member .member-title {
+            margin-bottom: 0.5rem;
+            color: var(--primary-accent);
+            font-weight: 600;
+            text-transform: uppercase;
+            font-size: 0.85rem;
+            letter-spacing: 0.06em;
+        }
+
+        .about .team-members .about-member .member-bio {
+            margin-bottom: 0.75rem;
+            color: var(--text-primary);
+            line-height: 1.6;
+        }
+
+        .about .team-members .about-member .member-skills {
+            margin-top: 0.5rem;
+            list-style: none;
+            padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 0.5rem 1rem;
+        }
+
+        .about .team-members .about-member .member-skills li {
+            background: rgba(201,169,97,0.08);
+            color: var(--primary-dark);
+            padding: 0.35rem 0.6rem;
+            border-radius: 4px;
+            font-size: 0.85rem;
+        }
+
+        @media (max-width: 768px) {
+            .about .team-members .about-member {
+                flex-direction: column;
+                align-items: flex-start; /* keep content left-aligned on mobile */
+                text-align: left;
+            }
+
+            .about .team-members .about-member .member-image {
+                flex: 0 0 auto;
+                margin-bottom: 1rem;
+            }
+
+            .about .team-members .about-member .member-content {
+                width: 100%;
+            }
+        }
+
+        /* Testimonial Component */
+        .testimonial {
+            padding: 5rem 0;
+            background: var(--background-light);
+        }
+
+        .testimonial-card {
+            max-width: 800px;
+            margin: 3rem auto;
+            padding: 3rem;
+            background: var(--background-white);
+            box-shadow: var(--shadow-subtle);
+            position: relative;
+        }
+
+        .testimonial-card::before {
+            content: '"';
+            position: absolute;
+            top: -20px;
+            left: 30px;
+            font-size: 6rem;
+            color: var(--primary-accent);
+            opacity: 0.2;
+            font-family: var(--font-serif);
+        }
+
+        .testimonial-text {
+            font-size: 1.25rem;
+            line-height: 1.8;
+            color: var(--text-primary);
+            font-style: italic;
+            margin-bottom: 2rem;
+        }
+
+        .testimonial-author {
+            display: flex;
+            align-items: center;
+            gap: 1rem;
+        }
+
+        .author-avatar {
+            width: 60px;
+            height: 60px;
+            border-radius: 50%;
+            background: var(--background-light);
+        }
+
+        .author-info .name {
+            font-weight: 600;
+            color: var(--primary-dark);
+        }
+
+        .author-info .position {
+            font-size: 0.875rem;
+            color: var(--text-secondary);
+        }
+
+        /* Footer */
+        .footer {
+            background: var(--primary-dark);
+            color: white;
+            padding: 3rem 0 2rem;
+        }
+
+        .footer-content {
+            display: grid;
+            grid-template-columns: 2fr 1fr 1fr;
+            gap: 3rem;
+            margin-bottom: 2rem;
+        }
+
+        .footer h4 {
+            color: white;
+            font-size: 1.125rem;
+            margin-bottom: 1rem;
+        }
+
+        .footer p, .footer a {
+            color: rgba(255,255,255,0.7);
+            text-decoration: none;
+            font-size: 0.9375rem;
+            line-height: 1.8;
+        }
+
+        .footer a:hover {
+            color: var(--primary-accent);
+        }
+
+        .footer-links {
+            list-style: none;
+        }
+
+        .footer-links li {
+            margin-bottom: 0.5rem;
+        }
+
+        .footer-bottom {
+            border-top: 1px solid rgba(255,255,255,0.1);
+            padding-top: 2rem;
+            text-align: center;
+            color: rgba(255,255,255,0.5);
+            font-size: 0.875rem;
+        }
+
+        /* Email Protection */
+        .email-protection {
+            position: relative;
+        }
+
+        .email-protection .email-hidden {
+            position: absolute;
+            left: -5000px;
+            top: -5000px;
+            visibility: hidden;
+            font-size: 0;
+            line-height: 0;
+        }
+
+        .email-protection .email-visible {
+            display: inline;
+        }
+    </style>
+    {% include tracking.html %}
+</head>
+<body>
+    <!-- Header Navigation -->
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <a href="{{ site.baseurl }}/" class="logo">{{ site.title | default: 'Consulting Co.' }}</a>
+                <ul class="nav-menu">
+                    {% for item in page.navigation %}
+                    <li><a href="{{ item.url }}">{{ item.title }}</a></li>
+                    {% endfor %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <!-- Dynamic Content Blocks -->
+    {% for block in page.blocks %}
+        
+        {% if block.type == 'hero' %}
+        <!-- Hero Section -->
+        <section class="hero" id="hero">
+            <div class="container">
+                <div class="hero-content">
+                    {% if block.subtitle %}
+                    <div class="subtitle">{{ block.subtitle }}</div>
+                    {% endif %}
+                    <h1>{{ block.title }}</h1>
+                    <p class="lead">{{ block.description }}</p>
+                    {% if block.cta %}
+                    <a href="{{ block.cta.url }}" class="btn btn-primary">{{ block.cta.text }}</a>
+                    {% endif %}
+                    {% if block.secondary_cta %}
+                    <a href="{{ block.secondary_cta.url }}" class="btn btn-outline">{{ block.secondary_cta.text }}</a>
+                    {% endif %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'services' %}
+        <!-- Services Grid -->
+        <section class="services" id="services">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                {% if block.description %}
+                <p>{{ block.description }}</p>
+                {% endif %}
+                <div class="services-grid">
+                    {% for service in block.items %}
+                    <div class="service-card">
+                        <div class="service-icon"></div>
+                        <h3>{{ service.title }}</h3>
+                        <p>{{ service.description }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'feature' %}
+        <!-- Feature Section -->
+        <section class="feature" id="feature">
+            <div class="container">
+                <div class="feature-content">
+                    <div class="feature-text">
+                        <h2>{{ block.title }}</h2>
+                        <p>{{ block.description }}</p>
+                        {% if block.list %}
+                        <ul class="feature-list">
+                            {% for item in block.list %}
+                            <li>{{ item }}</li>
+                            {% endfor %}
+                        </ul>
+                        {% endif %}
+                        {% if block.cta %}
+                        <a href="{{ block.cta.url }}" class="btn btn-primary">{{ block.cta.text }}</a>
+                        {% endif %}
+                    </div>
+                    <div class="feature-visual">
+                        {% if block.image %}
+                        <img src="{{ block.image }}" alt="{{ block.title }}">
+                        {% else %}
+                        <div style="text-align: center; color: var(--text-secondary);">
+                            <p>Visual Element</p>
+                        </div>
+                        {% endif %}
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'process' %}
+        <!-- Process Section -->
+        <section class="process" id="process">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                {% if block.description %}
+                <p>{{ block.description }}</p>
+                {% endif %}
+                <div class="process-steps">
+                    {% for step in block.steps %}
+                    <div class="process-step">
+                        <div class="process-step-number">{{ forloop.index }}</div>
+                        <p>{{ step }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'stats' %}
+        <!-- Statistics -->
+        <section class="stats">
+            <div class="container">
+                <div class="stats-grid">
+                    {% for stat in block.items %}
+                    <div class="stat-item">
+                        <span class="stat-number">{{ stat.number }}</span>
+                        <span class="stat-label">{{ stat.label }}</span>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'team' %}
+        <!-- Team Section -->
+        <section class="team">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                {% if block.description %}
+                <p>{{ block.description }}</p>
+                {% endif %}
+                <div class="team-grid">
+                    {% for member in block.members %}
+                    <div class="team-member">
+                        <div class="team-photo">
+                            {% if member.photo %}
+                            <img src="{{ member.photo }}" alt="{{ member.name }}">
+                            {% endif %}
+                        </div>
+                        <h4>{{ member.name }}</h4>
+                        <div class="role">{{ member.role }}</div>
+                        <p>{{ member.bio }}</p>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'testimonial' %}
+        <!-- Testimonial -->
+        <section class="testimonial">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                <div class="testimonial-card">
+                    <p class="testimonial-text">{{ block.quote }}</p>
+                    <div class="testimonial-author">
+                        <div class="author-avatar"></div>
+                        <div class="author-info">
+                            <div class="name">{{ block.author }}</div>
+                            <div class="position">{{ block.position }}</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+        {% endif %}
+
+                {% if block.type == 'about' %}
+        <!-- About Section -->
+        <section class="about" id="about">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                {% if block.description %}
+                <p>{{ block.description }}</p>
+                {% endif %}
+
+                {% if block.company_intro %}
+                <div class="about-intro">
+                    <p>{{ block.company_intro }}</p>
+                </div>
+                {% endif %}
+            </div>
+
+            <div class="team-members-container">
+                <div class="team-members">
+                    {% for member in block.members %}
+                    <div class="team-member about-member">
+                        {% if member.image %}
+                        <div class="member-image">
+                            <img src="{{ member.image }}" alt="{{ member.name }}">
+                        </div>
+                        {% endif %}
+
+                        <div class="member-content">
+                            <h3>{{ member.name }}</h3>
+                            <div class="member-title">{{ member.title }}</div>
+                            <p class="member-bio">{{ member.bio }}</p>
+                            {% if member.skills %}
+                            <ul class="member-skills">
+                                {% for skill in member.skills %}
+                                <li>{{ skill }}</li>
+                                {% endfor %}
+                            </ul>
+                            {% endif %}
+                        </div>
+                    </div>
+                    {% endfor %}
+                </div>
+            </div>
+
+            <div class="container">
+                {% if block.partnership_value %}
+                <div class="partnership-value">
+                    <h3>Our Unique Combined Value</h3>
+                    <p>{{ block.partnership_value }}</p>
+                </div>
+                {% endif %}
+            </div>
+        </section>
+        {% endif %}
+
+        {% if block.type == 'cta' %}
+        <!-- Call to Action -->
+        <section class="cta">
+            <div class="container">
+                <h2>{{ block.title }}</h2>
+                <p>{{ block.description }}</p>
+                <a href="{{ block.button.url }}" class="btn btn-primary">{{ block.button.text }}</a>
+            </div>
+        </section>
+        {% endif %}
+
+    {% endfor %}
+
+    <!-- Footer -->
+    <footer class="footer" id="footer">
+        <div class="container">
+            <div class="footer-content">
+                <div>
+                    <h4>{{ site.title | default: 'Consulting Co.' }}</h4>
+                    <p>{{ page.footer.description | default: 'Strategic consulting for exceptional business growth and transformation.' }}</p>
+                </div>
+                <div>
+                    <h4>Services</h4>
+                    <ul class="footer-links">
+                        {% for service in page.footer.services %}
+                        <li><a href="{{ service.url }}">{{ service.title }}</a></li>
+                        {% endfor %}
+                    </ul>
+                </div>
+                <div>
+                    <h4>Contact</h4>
+                    <p>
+                        <span class="email-protection">
+                            <span class="email-visible">hq@</span>
+                            <span class="email-hidden">ignore@</span>
+                            <span class="email-visible">structureclarityconfidence.com</span>
+                        </span><br>
+                        {{ page.footer.contact.phone }}<br>
+                        {{ page.footer.contact.address }}
+                    </p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>{{ page.footer.copyright | default: '© 2025 Consulting Co. All rights reserved.' }}</p>
+            </div>
+        </div>
+    <!-- Email Protection Script -->
+    <script>
+        // Simple email protection - reassembles email on page load
+        document.addEventListener('DOMContentLoaded', function() {
+            const emailParts = ['hq', 'structureclarityconfidence.com'];
+            const emailElement = document.querySelector('.email-protection');
+            if (emailElement) {
+                emailElement.innerHTML = '<a href="mailto:' + emailParts[0] + '@' + emailParts[1] + '">' + emailParts[0] + '@' + emailParts[1] + '</a>';
+            }
+        });
+    </script>

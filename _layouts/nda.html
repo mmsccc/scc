@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="{{ page.lang | default: site.lang | default: 'en' }}">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>{{ page.title | default: site.title }}</title>
+    <meta name="description" content="{{ page.description | default: site.description }}">
+
+    <style>
+        /* Base from def.html - trimmed for clarity */
+        * { box-sizing: border-box; margin: 0; padding: 0; }
+        :root {
+            --primary-dark: #1a1f2e;
+            --primary-accent: #c9a961;
+            --text-primary: #2c3e50;
+            --text-secondary: #6c757d;
+            --background-white: #ffffff;
+            --max-width: 900px;
+            --font-serif: 'Georgia', 'Times New Roman', serif;
+            --font-sans: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, 'Helvetica Neue', sans-serif;
+        }
+        body { font-family: var(--font-sans); color: var(--text-primary); background: var(--background-white); line-height: 1.6; }
+        h1,h2,h3{ font-family: var(--font-serif); color: var(--primary-dark); }
+        .container { max-width: var(--max-width); margin: 3rem auto; padding: 0 1.25rem; }
+
+        /* Simple header (re-uses def navigation structure) */
+        .header { border-bottom: 1px solid rgba(0,0,0,0.06); padding: 1rem 0; }
+        .nav { display:flex; justify-content:space-between; align-items:center; }
+        .logo { font-family: var(--font-serif); color: var(--primary-dark); text-decoration: none; font-size: 1.125rem; }
+
+        /* NDA content */
+        .nda { padding: 2rem 0; }
+        .nda .meta { margin-bottom: 1.5rem; color: var(--text-secondary); }
+        .nda .agreement { background: #fff; border: 1px solid rgba(0,0,0,0.04); padding: 2rem; border-radius: 6px; box-shadow: 0 6px 18px rgba(0,0,0,0.04); }
+        .nda .agreement h2 { margin-bottom: 1rem; font-size: 1.25rem; }
+        .nda .agreement p { margin-bottom: 1rem; color: var(--text-primary); }
+        .nda .clause { margin: 1rem 0; }
+
+        /* Signature block */
+        .signature-blocks { display: grid; grid-template-columns: 1fr 1fr; gap: 2rem; margin-top: 2.5rem; }
+        .signature { padding: 1rem; border-top: 1px dashed rgba(0,0,0,0.12); }
+        .sig-line { height: 1px; background: rgba(0,0,0,0.12); margin: 1.25rem 0; }
+        .sig-meta { color: var(--text-secondary); font-size: 0.95rem; }
+
+        @media (max-width: 720px) {
+            .container { margin: 1.5rem 1rem; }
+            .signature-blocks { grid-template-columns: 1fr; }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container nav">
+            <a class="logo" href="{{ site.baseurl }}/">{{ site.title | default: 'Structure, Clarity, Confidence' }}</a>
+            <nav>
+                <ul style="list-style:none;display:flex;gap:1rem;">
+                    {% if page.navigation %}
+                        {% for item in page.navigation %}
+                        <li><a href="{{ item.url }}" style="color:var(--text-primary);text-decoration:none">{{ item.title }}</a></li>
+                        {% endfor %}
+                    {% endif %}
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <main class="container">
+        <section class="nda">
+            <div class="meta">
+                {% if page.subtitle %}<div class="subtitle">{{ page.subtitle }}</div>{% endif %}
+            </div>
+
+            <div class="agreement">
+                <h2>{{ page.title | default: 'Mutual Non-Disclosure Agreement (NDA)' }}</h2>
+                <div class="content">{{ content }}</div>
+
+                <div class="signature-blocks">
+                    <div>
+                        <div class="sig-meta">Disclosing Party / Authorized Signatory</div>
+                        <div class="sig-line"></div>
+                        <div class="sig-meta">Name: ____________________</div>
+                        <div class="sig-meta">Title: ____________________</div>
+                        <div class="sig-meta">Date: ____________________</div>
+                    </div>
+                    <div>
+                        <div class="sig-meta">Receiving Party / Authorized Signatory</div>
+                        <div class="sig-line"></div>
+                        <div class="sig-meta">Name: ____________________</div>
+                        <div class="sig-meta">Title: ____________________</div>
+                        <div class="sig-meta">Date: ____________________</div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <footer style="margin:3rem 0 6rem; text-align:center; color:var(--text-secondary);">
+        <div class="container">© {{ site.time | date: '%Y' }} {{ site.title | default: 'Structure, Clarity, Confidence' }}</div>
+    </footer>
+</body>
+</html>

@@ -1,0 +1,2 @@
+- we're looking from different perspectives
+- we're combining our different cognitive styles to quickly remove obstacles in our thinking and our limitations

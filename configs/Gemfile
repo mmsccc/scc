@@ -1,0 +1,13 @@
+source 'https://rubygems.org'
+gem 'jekyll'
+
+gem 'jekyll-feed'
+gem 'jekyll-seo-tag'
+gem 'jekyll-sitemap'
+gem 'jekyll-mentions'
+gem 'jekyll-paginate'
+gem 'jekyll-archives'
+gem 'jekyll-assets'
+gem 'jekyll-include-cache'
+gem 'jekyll-gist'
+gem 'jekyll-redirect-from'

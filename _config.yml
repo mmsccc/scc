@@ -1,0 +1,43 @@
+title: "Structure, Clarity, Confidence"
+description: >-
+  Strategic consulting that brings structure, clarity, and confidence to ambitious founders and leaders. Transform chaos into certainty with expert guidance in business strategy, technical leadership, and investor communication.
+google_analytics: UA-XXXXXXXXX-X
+show_downloads: false
+author: Structure, Clarity, Confidence
+permalink: pretty
+baseurl: ""
+url: "https://structureclarityconfidence.com"
+# plugins:
+#   - jekyll-feed
+#   - jekyll-seo-tag
+#   - jekyll-sitemap
+#   - jekyll-mentions
+#   - jekyll-paginate
+#   - jekyll-archives
+#   - jekyll-assets
+#   - jekyll-include-cache
+#   - jekyll-gist
+#   - jekyll-redirect-from 
+
+gems:
+  - jekyll-mentions
+include:
+  - test-mombo-homepage.html
+
+# Exclude from processing
+exclude:
+  - Gemfile
+  - Gemfile.lock
+  - vendor/
+  - .bundle/
+  - .sass-cache/
+  - .jekyll-cache/
+  - gemfiles/
+  - .vscode/
+  - .obsidian/
+  - __pycache__/
+  - .pytest_cache/
+  - .venv/
+  - v1/  # Archived version
+  - v2/  # Separate version
+  - configs/
