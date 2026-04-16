@@ -26,6 +26,7 @@ blocks:
     cta:
       text: "Book Discovery Call"
       url: "https://tidycal.com/maciejjankowski/business-discovery-call"
+    image: "/assets/img/decision-hero.jpg"
     secondary_cta:
       text: "See How It Works"
       url: "#system"
@@ -34,7 +35,7 @@ blocks:
     id: problem
     title: "The Knowledge Problem Every Growing Company Has"
     description: "You've tried wikis. You've tried documentation sprints. You've tried recording meetings. None of it stuck. Here's why."
-    image: "/assets/img/zbigniew-audit.jpg"
+    image: "/assets/img/decision-chaos.jpg"
     items:
       - "Confluence/Notion creates a second place to look. People default to Slack. The wiki decays within 90 days."
       - "Documentation sprints produce overhead nobody maintains under deadline pressure."
@@ -60,6 +61,7 @@ blocks:
     id: difference
     title: "What Makes This Different From 'Just Use Notion'"
     description: "Every knowledge management tool on the market is an archive with a search bar. This system has a challenge layer - it makes decisions better at the moment they're being made, not just findable after the fact."
+    image: "/assets/img/decision-chess.jpg"
     list:
       - "AI Adversary Test: not 'are you sure?' but a specific, steel-manned counter-argument based on your stated alternatives"
       - "43 Cognitive Bias Detectors: organized by decision type (pricing, hiring, product, strategy, technology) - each a specific question, not a label"
@@ -74,6 +76,7 @@ blocks:
     id: proof
     title: "Built on Proven Patterns"
     description: "This system wasn't designed in a whiteboard session. It emerged from 18 months of daily use."
+    image: "/assets/img/decision-dashboard.jpg"
     list:
       - "200+ decisions logged with explicit alternatives, confidence scores, and second-choice tracking since November 2025"
       - "MemPalace semantic knowledge graph: 20,000+ entries, cross-session search, deduplication-by-design"
